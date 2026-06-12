@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sepolia Block</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <button id="show">show</button>
+  <p id="output"></p>
+
+  <script>
+    async function showBlock() {
+      if (!window.ethereum) {
+        document.getElementById("output").textContent = "MetaMask not found";
+        return;
+      }
+
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+
+      const sepolia = "0xaa36a7";
+      const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+      if (chainId !== sepolia) {
+        document.getElementById("output").textContent = "Switch to Sepolia";
+        return;
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const blockNumber = await provider.getBlockNumber();
+
+      document.getElementById("output").textContent = blockNumber;
+    }
+
+    document.getElementById("show").onclick = showBlock;
+  </script>
+</body>
+</html>
