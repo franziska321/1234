@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ERC20 Transfer</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <button id="send">send</button>
+  <p id="output"></p>
+
+  <script>
+    async function sendToken() {
+      if (!window.ethereum) {
+        document.getElementById("output").textContent = "MetaMask not found";
+        return;
+      }
+
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const tokenAddress = "0x40571b25e4a45ea274e61c841ef33b971ee9540e";
+      const recipient = "0x15433DA387451F9dE4565280C85506CB71aF9376";
+
+      const abi = [
+        "function transfer(address to, uint256 value) returns (bool)"
+      ];
+
+      const token = new ethers.Contract(tokenAddress, abi, signer);
+      const amount = ethers.parseUnits("10", 18);
+
+      const tx = await token.transfer(recipient, amount);
+
+      document.getElementById("output").textContent = tx.hash;
+    }
+
+    document.getElementById("send").onclick = sendToken;
+  </script>
+</body>
+</html>
