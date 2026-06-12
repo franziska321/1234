@@ -1,7 +1,7 @@
 {
   "name": "My NFT #1234",
   "description": "Test NFT minted on Sepolia for a blockchain exercise.",
-  "image": "https://example.com/nft-image.png",
+  "image": "https://raw.githubusercontent.com/franziska321/1234/main/nft3.png",
   "attributes": [
     {
       "trait_type": "Token ID",
