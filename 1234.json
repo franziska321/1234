@@ -1,0 +1,11 @@
+{
+  "name": "My NFT #1234",
+  "description": "Test NFT minted on Sepolia for a blockchain exercise.",
+  "image": "https://example.com/nft-image.png",
+  "attributes": [
+    {
+      "trait_type": "Token ID",
+      "value": "1234"
+    }
+  ]
+}
