@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ERC20 Balance</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <button id="show">show</button>
+  <p id="output"></p>
+
+  <script>
+    async function showBalance() {
+      if (!window.ethereum) {
+        document.getElementById("output").textContent = "MetaMask not found";
+        return;
+      }
+
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const account = await signer.getAddress();
+
+    const tokenAddress = "0x40571b25e4a45ea274e61c841ef33b971ee9540e";
+
+    const abi = [
+        "function balanceOf(address owner) view returns (uint256)"
+    ];
+
+    const contract = new ethers.Contract(tokenAddress, abi, provider);
+    const balance = await contract.balanceOf(account);
+
+    document.getElementById("output").textContent =
+        ethers.formatUnits(balance, 18);
+    }
+
+    document.getElementById("show").onclick = showBalance;
+  </script>
+</body>
+</html>
